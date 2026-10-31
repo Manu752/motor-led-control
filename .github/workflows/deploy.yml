@@ -1,0 +1,47 @@
+name: CI & GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate dashboard entry point
+        run: |
+          test -f index.html || exit 1
+          echo "Dashboard index.html exists."
+      - name: Validate C source files
+        run: |
+          test -f mlmw/CMakeLists.txt || test -d mlmw || exit 1
+          echo "C source tree verified."
+
+  deploy-pages:
+    if: github.ref == 'refs/heads/main'
+    needs: validate
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - id: deployment
+        uses: actions/deploy-pages@v4

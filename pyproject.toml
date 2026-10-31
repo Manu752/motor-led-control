@@ -1,0 +1,23 @@
+[project]
+name = "motor-led-control"
+version = "0.2.0"
+description = "Motor + LED middleware on Zephyr/TF-M with an AI test agent scored by on-target mutation testing, plus a BMS module"
+requires-python = ">=3.10"
+dependencies = ["cryptography>=42"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/py", "bms/tests/py"]
+
+[tool.ruff.lint.per-file-ignores]
+"tools/build_site.py" = ["E501"]  # embedded HTML/CSS template
+"bms/tools/make_results.py" = ["E501"]  # Markdown report template

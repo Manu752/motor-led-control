@@ -1,0 +1,23 @@
+{
+  "name": "motor-led-control",
+  "version": "1.0.0",
+  "description": "Motor and LED control system with PWM speed control, motor states, battery monitoring and basic safety checks (2021)",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -l 3000 ."
+  },
+  "keywords": [
+    "embedded",
+    "zephyr",
+    "motor-control",
+    "led",
+    "bms",
+    "ekf",
+    "automotive"
+  ],
+  "author": "Manu752",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}
